@@ -7,6 +7,8 @@ body{
 width:100%;
 }
 
+
+
 #overlay {
    display:none;    
    position:fixed;  
@@ -25,10 +27,10 @@ width:100%;
    left:50%;            
    top:50%;             
    width:300px;         
-   height:100%;
-   margin-top:-250px;   
-   margin-left:-180px;  
-   background-image: url("images/bluetheme.png");
+   height:150px;
+   margin-top:-75px;   
+   margin-left:-150px;  
+   background:#FFFFFF;  
    border:2px solid #000;
    z-index:100000;      
 }
@@ -245,27 +247,7 @@ padding: 2%;
 	opacity: 0.9;
 }
 
-#tabs-5{
-	background-image: url("images/bluetheme.png");
-	color: #fff;
-	opacity: 0.9;
-}
 
-table#auc-timeline {
-	border-collapse: collapse;
-	width:100%;
-	font-family: sans-serif;
-	color:#fff;
-}
-
-table#auc-timeline th {
-	padding-bottom:2%;
-}
-
-#welcome-tab5{
-	padding-bottom:2%;
-	font-size:small;
-}
 
 .team-name{
 	text-align:center;
@@ -349,12 +331,6 @@ table#auc-timeline th {
 	width:5%;
 	float:left;
 /*color: #fff; */
-}
-
-.ui-tabs .ui-tabs-nav li a {
-float: left;
-padding: .3em .5em;
-text-decoration: none;
 }
 
 

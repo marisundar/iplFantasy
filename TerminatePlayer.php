@@ -5,7 +5,6 @@ $password=""; // Mysql password
 $db_name="teleimmersion"; // Database name 
 $tbl_name="login"; // Table name 
 $PLAYER_ID=$_POST['PLAYER_ID'];
-
 // Connect to server and select databse.
 $con=mysqli_connect("sql213.byethost16.com","b16_16587264","vaira1129")or die("cannot connect"); 
 

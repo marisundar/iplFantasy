@@ -1,6 +1,5 @@
 <?php 
 $TEAM_ID=$_POST['teamid'];
-$LEAGUE_ID=$_POST['LEAGUE_ID'];
 echo "<label id=\"passedId\"  value=\"$TEAM_ID\">$TEAM_ID</label> "; 
 ?>
 <head>
@@ -433,13 +432,11 @@ function updateScores(){
 teamScores();
 
 var obj='<?php echo $TEAM_ID?>';
-var league='<?php echo $LEAGUE_ID?>';
 document.getElementById('MyTeamName').innerHTML =$.ajax({ type: "POST",   
                         url: "/teamIndiv.php",   
                         async: false,
 						data: { 
 								'TEAM_ID':obj,
-								'LEAGUE_ID':league
 								}
                       }).responseText;
 /*KARAN
@@ -933,8 +930,7 @@ var response =$.ajax({ type: "POST",
                         url: "/team.php",   
                         async: false,
 						data: { 
-								'TEAM_ID': teams[i].id ,
-								'LEAGUE_ID':teams[i].league
+								'TEAM_ID': teams[i].id 
 								}
                       }).responseText;
 tables=tables+response;
@@ -1126,10 +1122,11 @@ KOMARU FANTASY LEAGUE
 <!--Mine Starts!-->
 <div id="tabs">
   <ul>
-    <li><a href="#tabs-1">My Team</a></li>
+    <li><a href="#tabs-1">ReAuction</a></li>
 	<li><a href="#tabs-2" onClick="playerList()">PP</a></li>
     <li><a href="#tabs-3" onClick="">Live</a></li>
     <li><a href="#tabs-4" onClick="teamLists()">All</a></li>
+	<li><a href="#tabs-5" onClick="teamLists()">My</a></li>
   </ul>
   <div id="tabs-3">
 	<div id="container">
@@ -1139,7 +1136,7 @@ KOMARU FANTASY LEAGUE
 		<div id="loading">Loading Please wait!</div>
 </div>
   </div>
-  <div id="tabs-1">
+  <div id="tabs-5">
 		<div id="PlayerScore"></div>
 		
   </div>
@@ -1165,6 +1162,50 @@ KOMARU FANTASY LEAGUE
   <div id="tabs-4">
 	<div id="teamScore" ></div>
   </div>
+  
+   <div id="tabs-1">
+   <div id ="welcome-tab5">
+		Hey Crazy Cricketers ! Welcome to the Re-Auction ! </br>
+		I promise its gonna be much more fun and well balanced than last time !! </br>
+		Here is the timeline for Re-Auction. Please Stay tuned for much more info !!! 
+   </div>
+	<table id="auc-timeline">
+		<tr>
+			<th> Action </th>
+			<th> Timeline & Deadline </th>
+		</tr>
+		<tr>
+			<td> Teams to Announce Retained Players </td>
+			<td> Wed 8PM, 27th Apr</td>
+		</tr>
+		<tr>
+			<td> Organizer: Info on List of Players avaialble for Auction </td>
+			<td> Thu 10PM, 28th Apr</td>
+		</tr>
+		<tr>
+			<td> Close Bidding I </td>
+			<td> Fri 9PM, 29th Apr</td>
+		</tr>
+		<tr>
+			<td> Results : Close Bidding I </td>
+			<td> Fri 10PM, 29th Apr</td>
+		</tr>
+		<tr>
+			<td> Close Bidding II </td>
+			<td> Sat 2PM, 29th Apr</td>
+		</tr>
+		<tr>
+			<td> Results : Close Bidding II </td>
+			<td> Sat 3PM, 30th Apr</td>
+		</tr>
+		<tr>
+			<td> Auction (Open Bid) </td>
+			<td> Sat 6:30 PM - 9PM, 30th Apr</td>
+		</tr>
+	</table>
+  </div>
+  
+  
 </div>
 <!--Mine Ends!-->
 <label id="teams"></label>
