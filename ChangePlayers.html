@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Register</title>
+
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+  <script>
+  
+  
+  
+  function searchPlay(playerName){
+  
+		var response =$.ajax({ type: "POST",   
+                        url: "/searchPlayers.php",   
+                        async: false,
+						data: {
+						'Name':playerName
+						}
+                      }).responseText;
+					  
+	document.getElementById("searchedPlayers").innerHTML = response;
+ 
+  }
+  
+  function deletePlayer(playerid){
+  
+  if (confirm("Do you really Wish to delete "+document.getElementsByName(playerid)[0].innerHTML+" ?")) {
+  console.log("delete"+playerid);
+    var response =$.ajax({ type: "POST",   
+                        url: "/TerminatePlayer.php",   
+                        async: false,
+						data: {
+						'PLAYER_ID':playerid
+						}
+                      }).responseText;
+} else {
+    // Do nothing!
+}
+  
+  
+  }
+  
+  function addPlayer(playerid){
+  var selectBox = document.getElementById("TeamList");
+   var selectedValue = selectBox.options[selectBox.selectedIndex].text;
+  if (confirm("Do you wish to add "+document.getElementsByName(playerid)[0].innerHTML+" for team "+selectedValue+" ?")) {
+  //alert("playerId:"+playerid+" Team id "+selectBox.options[selectBox.selectedIndex].value);
+  
+  var response =$.ajax({ type: "POST",   
+                        url: "/insertPlayerUI.php",   
+                        async: false,
+						data: {
+						'TEAM_ID':selectBox.options[selectBox.selectedIndex].value,
+						'PLAYER_ID':playerid
+						}
+                      }).responseText;
+					  console.log(response);
+  
+  }
+
+  }
+  function changeFunc(){
+   var selectBox = document.getElementById("TeamList");
+    var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+	
+	
+	var response =$.ajax({ type: "POST",   
+                        url: "/requestPlayers.php",   
+                        async: false,
+						data: {
+						'TEAM_ID':selectedValue
+						}
+                      }).responseText;
+	
+  document.getElementById("listPlayers").innerHTML = response;
+	
+	}
+  function teamLists(){
+
+//var queryVal=document.getElementById('teams').value;
+var response =$.ajax({ type: "POST",   
+                        url: "/teamlists.php",   
+                        async: false
+                      }).responseText;
+
+					  console.log(response);
+					  console.log(JSON.parse(response).teams);
+var teams = JSON.parse(response).teams;
+for(var i in teams){
+var x = document.getElementById("TeamList");
+var option = document.createElement("option");
+option.text = teams[i].name;
+option.id=teams[i].id;
+option.value=teams[i].id;
+x.add(option);
+}
+
+}
+  
+  
+  </script>
+  
+</head>
+
+<body onload="teamLists()">
+
+  <p><label for="Team">Team</label>
+  <select id="TeamList" name="team" onclick="changeFunc()"></select>
+  </p>
+  <p>
+  <div id="listPlayers"></div>
+  </p>
+<div><button id="Search">Search</button> <input type="text" onchange="searchPlay(this.value)"></input></div>
+<div id="searchedPlayers"></div>
+</br>
+</br>
+</br>
+</br></br>
+</body>
+</html>

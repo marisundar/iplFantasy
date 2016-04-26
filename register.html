@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Register</title>
+
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+  <script>
+  
+  function teamLists(){
+
+//var queryVal=document.getElementById('teams').value;
+var response =$.ajax({ type: "POST",   
+                        url: "/teamlists.php",   
+                        async: false
+                      }).responseText;
+
+					  console.log(response);
+					  console.log(JSON.parse(response).teams);
+var teams = JSON.parse(response).teams;
+for(var i in teams){
+var x = document.getElementById("TeamList");
+var option = document.createElement("option");
+option.text = teams[i].name;
+option.id=teams[i].id;
+option.value=teams[i].id;
+x.add(option);
+}
+
+}
+  
+  
+  </script>
+  
+</head>
+
+<body onload="teamLists()">
+<form id="form1" name="form1" method="post" action="insertMember.php">
+  <p>
+    <label for="FName">FirstName</label>
+    <input type="text" name="fname" id="fname" />
+  </p>
+  <p>
+    <label for="LName">LastName</label>
+    <input type="text" name="lname" id="lname" />
+  </p>
+  <p><label for="Team">Team</label>
+  <select id="TeamList" name="team"></select>
+  <p>
+  </p>
+    <label for="email">EmailId</label>
+    <input type="text" name="email" id="email" />
+  </p>
+  <p>
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" />
+  </p>
+<button id="register" type="submit" onClick="teamLists()" >Register</button>
+</form>
+</body>
+</html>

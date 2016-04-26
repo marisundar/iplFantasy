@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Login</title>
+
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+  
+  <script>
+  
+  
+  function validatePassword(){
+	  
+	  var response =$.ajax({ type: "POST",   
+                        url: "/validatelogin.php",   
+                        async: false,
+						data: { 
+								'email': document.getElementById('email').value ,
+								'password':  document.getElementById('password').value 
+								}
+                      }).responseText;
+	  console.log(response);
+	  if(response=="invalid password"){
+
+		  $('body').append("invalid password!");
+	  }
+	  else{
+
+		  	document.cookie="teamid="+response.substring(8);
+	  
+	 var form = $('<form action="http://marisundar.byethost16.com/FirstPage.php" method="post" style="visibility:hidden">' +
+  					'<input type="text" name="teamid" value="' + response.substring(8) + '" />' +
+  					'</form>');
+		$('body').append(form);
+	form.submit();
+}
+  }
+  function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+    }
+    return "";
+}
+  
+
+  function checkCookie(){
+  console.log(getCookie("teamid")+"~~")
+  if(getCookie("teamid")!=""){
+  var form = $('<form action="http://marisundar.byethost16.com/FirstPage.php" method="post" style="visibility:hidden">' +
+  					'<input type="text" name="teamid" value="' + getCookie("teamid") + '" />' +
+  					'</form>');
+		$('body').append(form);
+	form.submit();
+  }
+  
+  }
+  function registerFun() {
+    window.location.assign("http://marisundar.byethost16.com/register.html");
+}
+function guestLogin() {
+    window.location.assign("http://marisundar.byethost16.com/");
+}
+  </script>
+</head>
+
+<body onload="checkCookie()">
+<form id="form1" name="form1" method="post" action="validatelogin.php">
+  <p>
+    <label for="email">Email     </label>
+          <input type="text" name="email" id="email" />
+  </p>
+  <p>
+    <label for="password">Password</label>
+    <input name="password" type="password" id="password" /></br>
+  </p>
+  <p>
+    <input name="submit" type="button" onClick="validatePassword()" value="submit" />
+	<input name="guest" type="button" onClick="guestLogin()" value="guest" />
+
+  </p>
+</form>
+
+</body>
+</html>

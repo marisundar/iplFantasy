@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>RetainPlayers</title>
+
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+  <script>
+  
+  function checkFor5(){
+  var checkboxes = document.getElementsByName('reatinedPlayer');
+  var checkboxesChecked = [];
+  var count=0;
+  // loop over them all
+  for (var i=0; i<checkboxes.length; i++) {
+     // And stick the checked ones onto an array...
+		if (checkboxes[i].checked) {
+		count++;
+		}
+		if(count>5&&checkboxes[i].checked){
+		alert("Only 5 players can be selected");
+		checkboxes[i].checked=false;
+		}
+	}
+}
+
+  
+  function retainPlayers(){
+  
+  if (confirm("Once Finalzed cannot be changed.\n Do you really Wish to  continue?")) {
+  /*
+  console.log("delete"+playerid);
+    var response =$.ajax({ type: "POST",   
+                        url: "/TerminatePlayer.php",   
+                        async: false,
+						data: {
+						'PLAYER_ID':playerid
+						}
+                      }).responseText;
+					  */
+					  
+					  
+var checkboxes = document.getElementsByName('reatinedPlayer');
+  var checkboxesChecked = [];
+  // loop over them all
+  for (var i=0; i<checkboxes.length; i++) {
+     // And stick the checked ones onto an array...
+     if (checkboxes[i].checked) {
+        //checkboxesChecked.push(checkboxes[i]);
+		console.log(checkboxes[i].id);
+		console.log(document.getElementsByName(checkboxes[i].id)[0].innerHTML);
+		
+		
+		//Add code to update the available players values to 2
+		
+     }
+  }
+} else {
+    // Do nothing!
+}
+  
+  
+  }
+  
+
+  function changeFunc(){
+   //var selectBox = document.getElementById("TeamList");
+    //var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+	var selectedValue = 1;
+	
+	
+	var response =$.ajax({ type: "POST",   
+                        url: "/requestRetainPlayers.php",   
+                        async: false,
+						data: {
+						'TEAM_ID':selectedValue
+						}
+                      }).responseText;
+	
+  document.getElementById("listPlayers").innerHTML = response;
+	
+	}
+
+  
+  
+  </script>
+  
+</head>
+
+<body onload="changeFunc()">
+
+
+  </p>
+  <p>
+  <div id="listPlayers" ></div>
+  <button onclick='retainPlayers()'>Finalise</button>
+  </p>
+</br></br>
+</body>
+</html>
