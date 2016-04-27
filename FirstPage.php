@@ -432,6 +432,24 @@ function updateScores(){
 teamScores();
 
 var obj='<?php echo $TEAM_ID?>';
+
+
+var checkRetains =$.ajax({ type: "POST",   
+                        url: "/retainComplete.php",   
+                        async: false,
+						data: { 
+								'TEAM_ID':obj,
+								}
+                      }).responseText;
+if(checkRetains=='TRUE'){
+	//document.getElementById('tabs-1').style.visibility='hidden';
+	//document.getElementById('retainBut').style.visibility='hidden';
+	document.getElementById('retainLink').innerHTML="Retaining Players Complete"
+	
+	
+
+}
+
 document.getElementById('MyTeamName').innerHTML =$.ajax({ type: "POST",   
                         url: "/teamIndiv.php",   
                         async: false,
@@ -1084,8 +1102,8 @@ function scoresClose(){
   <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
 <link rel="stylesheet" type="text/css" href="style.css">
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+  <script src="js/jquery-1.12.3.min.js"></script>
+  <script src="js/jquery-ui.min.js"></script>
   <head>
   <script>
   $(function() {
@@ -1122,11 +1140,12 @@ KOMARU FANTASY LEAGUE
 <!--Mine Starts!-->
 <div id="tabs">
   <ul>
-    <li><a href="#tabs-1">ReAuction</a></li>
+    <li id="retainBut"><a href="#tabs-1">Retain</a></li>
 	<li><a href="#tabs-2" onClick="playerList()">PP</a></li>
     <li><a href="#tabs-3" onClick="">Live</a></li>
     <li><a href="#tabs-4" onClick="teamLists()">All</a></li>
 	<li><a href="#tabs-5" onClick="teamLists()">My</a></li>
+	<li><a href="#tabs-6">ReAuc</a></li>
   </ul>
   <div id="tabs-3">
 	<div id="container">
@@ -1163,7 +1182,18 @@ KOMARU FANTASY LEAGUE
 	<div id="teamScore" ></div>
   </div>
   
-   <div id="tabs-1">
+  <div id="tabs-1">
+  <div id = 'retainLink'>
+	<a href ="/RetainPlayers.html"> Retain Players </a>
+  </div>
+   <!--
+  Mari, once a team submits the retain player list, hide the above div and populate the following div with retained players list.\
+  <div id ='ret-players'>
+  </div>
+	!-->
+  </div>
+  
+   <div id="tabs-6">
    <div id ="welcome-tab5">
 		Hey Crazy Cricketers ! Welcome to the Re-Auction ! </br>
 		I promise its gonna be much more fun and well balanced than last time !! </br>

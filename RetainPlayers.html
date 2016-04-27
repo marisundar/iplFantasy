@@ -6,17 +6,23 @@
 
 <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+  !-->
   <script>
    var teamid="";
-  function checkFor5(){
+   var retamt = 0;
+   var aucamt = 75;
+   var updateString="";
+  function checkFor5(inp){
   var checkboxes = document.getElementsByName('reatinedPlayer');
   var checkboxesChecked = [];
   var count=0;
   // loop over them all
+
   for (var i=0; i<checkboxes.length; i++) {
      // And stick the checked ones onto an array...
 		if (checkboxes[i].checked) {
@@ -25,8 +31,27 @@
 		if(count>5&&checkboxes[i].checked){
 		alert("Only 5 players can be selected");
 		checkboxes[i].checked=false;
+		return;
 		}
 	}
+	
+	var chkval =  $(inp).is(":checked");
+	var retamt = $("#ret-amt").html();
+	var aucamt = $("#auc-amt").html();
+	var pprice = $(inp).parent().parent().find('.price').html();
+	if(chkval){
+		console.log("is on");
+		retamt = parseFloat(retamt) + parseFloat(pprice);	
+	} else{
+		console.log("is off");
+		retamt = parseFloat(retamt) - parseFloat(pprice);	
+	}
+	aucamt = 75 - parseFloat(retamt) 
+	$("#ret-amt").html(retamt);
+	$("#auc-amt").html(aucamt)
+	
+	console.log("price: "+pprice);
+	console.log("auc,ret: "+ retamt +" - "+ aucamt);
 }
 
   
@@ -37,7 +62,7 @@
   }
   else{
   teamid=getCookie("teamid");
-  
+  updateString={"teamid":teamid,"PLAYERS":[]}
   }
   }
   
@@ -56,6 +81,27 @@
   function retainPlayers(){
   
   if (confirm("Once Finalzed cannot be changed.\n Do you really Wish to  continue?")) {
+  
+  
+    var checkboxes = document.getElementsByName('reatinedPlayer');
+  var checkboxesChecked = [];
+  var count=0;
+  // loop over them all
+  for (var i=0; i<checkboxes.length; i++) {
+     // And stick the checked ones onto an array...
+		if (checkboxes[i].checked) {
+		updateString['PLAYERS'].push({"PLAYER_ID":checkboxes[i].id});
+		count++;
+		}
+	}
+	
+	
+  console.log(updateString);
+  	 var form = $('<form action="http://marisundar.byethost16.com/retainPlayersUpdate.php" method="post" style="visibility:hidden">' +
+  					"<input type=\"text\" name=\"resultVal\" value='" + JSON.stringify(updateString) + "' />" +
+  					'</form>');
+						$('body').append(form);
+	form.submit();
   /*
   console.log("delete"+playerid);
     var response =$.ajax({ type: "POST",   
@@ -68,21 +114,7 @@
 					  */
 					  
 					  
-var checkboxes = document.getElementsByName('reatinedPlayer');
-  var checkboxesChecked = [];
-  // loop over them all
-  for (var i=0; i<checkboxes.length; i++) {
-     // And stick the checked ones onto an array...
-     if (checkboxes[i].checked) {
-        //checkboxesChecked.push(checkboxes[i]);
-		console.log(checkboxes[i].id);
-		console.log(document.getElementsByName(checkboxes[i].id)[0].innerHTML);
-		
-		
-		//Add code to update the available players values to 2
-		
-     }
-  }
+
 } else {
     // Do nothing!
 }
@@ -113,17 +145,32 @@ var checkboxes = document.getElementsByName('reatinedPlayer');
   
   
   </script>
-  
+  <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="js/jquery-1.12.3.min.js"></script>
 </head>
 
 <body onload="changeFunc()">
 
-
-  </p>
-  <p>
+<div id ="retain-page-container">
+<div id="page-header">
+KOMARU FANTASY LEAGUE
+</div>
+  <div id = "retain-header">
+  <div id="Retain-amt" class ="ret33">  
+   <span id ="ret-span"> Ret Amt </span>
+   <span id = "ret-amt">0</span>
+   <span> C </span>
+  </div>
+  <div id="Auction-amt" class ="ret33">  
+	<span id ="auc-span"> Auc Amt </span>
+   <span id = "auc-amt">75</span>
+   <span> C </span>
+  </div>
+  <div id="Retain-button" class ="ret33"> <button onclick='retainPlayers()'>Finalise</button> </div>
+  </div>
   <div id="listPlayers" ></div>
-  <button onclick='retainPlayers()'>Finalise</button>
-  </p>
-</br></br>
+  
+
+</div>
 </body>
 </html>
