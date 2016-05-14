@@ -441,14 +441,22 @@ var checkRetains =$.ajax({ type: "POST",
 								'TEAM_ID':obj,
 								}
                       }).responseText;
-if(checkRetains=='TRUE'){
+/*if(checkRetains=='TRUE'){
 	//document.getElementById('tabs-1').style.visibility='hidden';
 	//document.getElementById('retainBut').style.visibility='hidden';
-	document.getElementById('retainLink').innerHTML="Retaining Players Complete"
+	document.getElementById('retainLink').innerHTML="Retaining Players Complete";
 	
+	var checkRetains =$.ajax({ type: "POST",   
+                        url: "/closedBiddingPlayers.php",   
+                        async: false,
+						data: { 
+								'TEAM_ID':obj,
+								}
+                      }).responseText;
+	document.getElementById('retainLink').innerHTML=checkRetains;
 	
 
-}
+}*/
 
 document.getElementById('MyTeamName').innerHTML =$.ajax({ type: "POST",   
                         url: "/teamIndiv.php",   
@@ -835,13 +843,13 @@ var responseRes =$.ajax({ type: "POST",
                       }).responseText;
 //console.log(overallConsole[player].name+" -- "+ responseRes);
 
-batPoints=batPoints+(parseInt(overallConsole[player].runs==null?0:overallConsole[player].runs)-parseInt(overallConsole[player].batsmanBalls==null?0:overallConsole[player].batsmanBalls))*2;
+batPoints=batPoints+(parseInt(overallConsole[player].runs==null?0:overallConsole[player].runs)-parseInt(overallConsole[player].batsmanBalls==null?0:overallConsole[player].batsmanBalls));
 
 fieldPoints=fieldPoints+parseInt(overallConsole[player].catches==null?0:overallConsole[player].catches)*10;
 fieldPoints=fieldPoints+parseInt(overallConsole[player].stumping==null?0:overallConsole[player].stumping)*15;
 fieldPoints=fieldPoints+parseInt(overallConsole[player].runout==null?0:overallConsole[player].runout)*10;
 
-bowlPoints=bowlPoints+parseInt(overallConsole[player].wickets==null?0:overallConsole[player].wickets)*20;
+bowlPoints=bowlPoints+parseInt(overallConsole[player].wickets==null?0:overallConsole[player].wickets)*30;
 bowlPoints=bowlPoints+parseInt(overallConsole[player].maiden==null?0:overallConsole[player].maiden)*25;
 bowlPoints=bowlPoints+((parseFloat(overallConsole[player].overs==null?0:overallConsole[player].overs)*6*2.5)-parseInt(overallConsole[player].bowlingRuns==null?0:overallConsole[player].bowlingRuns));
 
@@ -1047,7 +1055,7 @@ document.getElementById('PlayerScore').innerHTML=tables;
 function giveTime(){
 	var d = new Date();
 	d.getHours();
-	if(d.getHours()>20){
+	if(d.getHours()>16){
 		document.getElementById('editPower').style.visibility='hidden';
 	}
 
@@ -1064,13 +1072,14 @@ function scores(playerid){
       //Changing the display css style from none to block will make it visible
       overlay.style.display = "block";
 	  
-	  
+	  var obj='<?php echo $TEAM_ID?>';
 	  
 	  	 var response =$.ajax({ type: "POST",   
                         url: "/playerSplitScore.php",   
                         async: false,
 						data: { 
 								'PLAYER_ID':playerid,
+								'TEAM_ID':obj
 								}
                       }).responseText;
 					  console.log(response);
@@ -1184,7 +1193,12 @@ KOMARU FANTASY LEAGUE
   
   <div id="tabs-1">
   <div id = 'retainLink'>
-	<a href ="/RetainPlayers.html"> Retain Players </a>
+	<p> Here You Go! </p>
+	<br>
+	<p> <a href = "pdf/KFL_Retains.pdf"> Click Here </a> to see Players Retained by all teams </p>
+	<br>
+	<br>
+	<p> <a href = "pdf/KFL_Auction_Players.pdf"> Click Here </a> to see Players Available for various Auctions </p> 
   </div>
    <!--
   Mari, once a team submits the retain player list, hide the above div and populate the following div with retained players list.\

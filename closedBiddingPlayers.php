@@ -5,11 +5,11 @@ $password=""; // Mysql password
 $db_name="teleimmersion"; // Database name 
 $tbl_name="login"; // Table name 
 $TEAM_ID=$_POST['TEAM_ID'];
-//$TEAM_ID=1;
+//$TEAM_ID=2;
 // Connect to server and select databse.
 $con=mysqli_connect("sql213.byethost16.com","b16_16587264","vaira1129")or die("cannot connect"); 
 
-$sql_pat="SELECT DISTINCT TPI.PLAYER_ID,CONCAT(FIRST_NAME,\" \",LAST_NAME) NAME FROM b16_16587264_ipl.`team_players` TPI ,b16_16587264_ipl.`player_info` PI WHERE PI.PLAYER_ID=TPI.PLAYER_ID AND NOW() BETWEEN START_DATE AND END_DATE AND AVAILABLE_FOR_AUCTION=2";
+$sql_pat="SELECT DISTINCT TPI.PLAYER_ID,CONCAT(FIRST_NAME,\" \",LAST_NAME) NAME FROM b16_16587264_ipl.`team_players` TPI ,b16_16587264_ipl.`player_info` PI WHERE PI.PLAYER_ID=TPI.PLAYER_ID AND  TEAM_ID=$TEAM_ID AND NOW() BETWEEN START_DATE AND END_DATE AND AVAILABLE_FOR_AUCTION=2";
 
     $result_pat=mysqli_query($con,$sql_pat);
 

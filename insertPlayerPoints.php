@@ -23,7 +23,7 @@ $ISOUT=$_POST['ISOUT'];
 // Connect to server and select databse.
 $con=mysqli_connect("sql213.byethost16.com","b16_16587264","vaira1129")or die("cannot connect"); 
 
-$sql_pat="select RUNSFACTOR  FROM b16_16587264_ipl.player_info_info";
+$sql_pat="select RUNSFACTOR  FROM b16_16587264_ipl.player_info WHERE PLAYER_ID=$PLAYER_ID";
 $runFactor=1;
     $result_pat=mysqli_query($con,$sql_pat);
 
@@ -38,10 +38,19 @@ $BatPoints=$BatPoints+($RUNS/25)*10;
 if($ISOUT=='YES' && $RUNS==0){
 $BatPoints=$BatPoints-10;
 }
-$BatPoints=$BatPoints+($RUNS-$BATSMANBALLS)*2;
 
 
-$BowlPoints=$WICKETS*20;
+if(strtotime($PLAYED_DATE)<strtotime('2016-04-29 23:59:59')){
+	$BowlPoints=$WICKETS*20;
+	$BatPoints=$BatPoints+($RUNS-$BATSMANBALLS)*2;
+}
+else{
+	$BowlPoints=$WICKETS*30;
+	$BatPoints=$BatPoints+($RUNS-$BATSMANBALLS);
+	
+}
+
+
 $BowlPoints=$BowlPoints+$MAIDEN*25;
 $BowlPoints=$BowlPoints+(($OVERS*6*2.5)-$BOWLINGRUNS);
 
